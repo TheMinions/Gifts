@@ -1,8 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:background="#f914f9"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    <RelativeLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:background="#f43b3b"
+        android:id="@+id/classify_fragment_relayout">
+
+    <android.support.design.widget.TabLayout
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:id="@+id/classify_fragment_tablayout"
+        app:tabIndicatorColor="#fff"
+        app:tabTextColor="#f9f8f3"
+        android:layout_centerVertical="true"/>
+
+</RelativeLayout>
+
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/classify_fragment_relayout2"
+        android:layout_below="@+id/classify_fragment_relayout">
+
+    <Button
+        android:layout_height="26dp"
+        android:layout_width="match_parent"
+        android:background="#1000"
+        android:id="@+id/classify_fragment_bt_select"
+        android:layout_centerVertical="true"
+        android:text="搜索单品、功略"
+        android:textColor="#a19f9f"
+        android:textSize="18sp"
+        android:layout_margin="10dp"/>
+
+    <ImageView
+        android:layout_height="20dp"
+        android:layout_width="20dp"
+        android:src="@mipmap/icon_search"
+        android:layout_marginLeft="65dp"
+        android:layout_marginTop="10dp"/>
+
+</RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/classify_fragment_viewPager"
+        android:layout_below="@+id/classify_fragment_relayout2"/>
+
+</RelativeLayout>
