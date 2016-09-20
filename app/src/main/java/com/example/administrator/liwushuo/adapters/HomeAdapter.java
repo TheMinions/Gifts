@@ -3,6 +3,7 @@ package com.example.administrator.liwushuo.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import com.example.administrator.liwushuo.model.homemodel.TabModel;
 
@@ -14,8 +15,9 @@ import java.util.List;
  */
 public class HomeAdapter extends FragmentPagerAdapter {
 
+    private static final String TAG = HomeAdapter.class.getSimpleName();
     private List<Fragment> data;
-    private List<TabModel.DataBean.ChannelsBean> titles;
+    private List<TabModel.DataBean.ChannelsBean>  titles =new ArrayList<>();
 
     public HomeAdapter(FragmentManager fm , List<Fragment> data) {
         super(fm);
@@ -28,6 +30,7 @@ public class HomeAdapter extends FragmentPagerAdapter {
     public void setTitles(List<TabModel.DataBean.ChannelsBean> titles){
         if (titles != null) {
             this.titles.addAll(titles);
+            Log.e(TAG, "setTitles:   "+titles.size() );
         }
     }
     public void upData(List<Fragment> data){
@@ -35,6 +38,7 @@ public class HomeAdapter extends FragmentPagerAdapter {
             this.data.clear();
             this.data.addAll(data);
             notifyDataSetChanged();
+            Log.e(TAG, "upData: " );
         }
     }
 

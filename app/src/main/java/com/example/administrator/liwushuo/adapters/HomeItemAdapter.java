@@ -3,6 +3,8 @@ package com.example.administrator.liwushuo.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.liwushuo.R;
-import com.example.administrator.liwushuo.model.homemodel.HomeList;
+import com.example.administrator.liwushuo.model.homemodel.ItemsBean;
 import com.squareup.picasso.Picasso;
 
 import org.xutils.image.ImageOptions;
@@ -24,11 +26,12 @@ import java.util.List;
  * Created by Administrator on 2016/9/20 0020.
  */
 public class HomeItemAdapter extends BaseAdapter {
-    private List<HomeList.DataBean.ItemsBean> data;
+    private static final String TAG = HomeItemAdapter.class.getSimpleName();
+    private List<ItemsBean> data;
     private LayoutInflater inflater;
     private Context mContext;
-
-    public HomeItemAdapter(List<HomeList.DataBean.ItemsBean> data, Context context) {
+    ImageOptions.Builder options = new ImageOptions.Builder();
+    public HomeItemAdapter(List<ItemsBean> data, Context context) {
         if (data != null) {
             this.data = data;
         }else {
@@ -38,13 +41,22 @@ public class HomeItemAdapter extends BaseAdapter {
         inflater = LayoutInflater.from(context);
     }
 
+    public void upData(List<ItemsBean> data){
+        if (data != null) {
+            this.data.clear();
+            this.data.addAll(data);
+            notifyDataSetChanged();
+            Log.e(TAG, "upData: " +this.data.size());
+        }
+    }
+
     @Override
     public int getCount() {
         return data != null ? data.size():0;
     }
 
     @Override
-    public HomeList.DataBean.ItemsBean getItem(int position) {
+    public ItemsBean getItem(int position) {
         return data.get(position);
     }
 
@@ -55,7 +67,7 @@ public class HomeItemAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder vh = null;
+        ViewHolder vh  = null;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.home_fragment_listview_item,parent,false);
             vh = new ViewHolder();
@@ -70,12 +82,29 @@ public class HomeItemAdapter extends BaseAdapter {
         }else {
             vh = (ViewHolder) convertView.getTag();
         }
-        vh.tv1.setText(getItem(position).getColumn().getCategory());
-        vh.tv2.setText(getItem(position).getColumn().getTitle());
-        vh.tv3.setText(getItem(position).getAuthor().getNickname());
-        vh.tv4.setText(getItem(position).getTitle());
-        vh.tv5.setText(getItem(position).getLikes_count());
-        ImageOptions.Builder options = new ImageOptions.Builder();
+        if (getItem(position).getColumn()!=null) {
+            vh.tv1.setText(getItem(position).getColumn().getCategory());
+            vh.tv1.setBackgroundColor(Color.parseColor("f98dd1"));
+        }else {
+            vh.tv1.setText("");
+            vh.tv1.setBackgroundColor(Color.WHITE);
+        }
+        if (getItem(position).getColumn()!=null) {
+            vh.tv2.setText(getItem(position).getColumn().getTitle());
+        }else {
+            vh.tv2.setText("");
+        }
+        if (getItem(position).getAuthor().getNickname()!=null) {
+            vh.tv3.setText(getItem(position).getAuthor().getNickname());
+        }else {
+            vh.tv3.setText("");
+        }
+        if (getItem(position).getTitle()!=null) {
+            vh.tv4.setText(getItem(position).getTitle());
+        }else {
+            vh.tv4.setText("");
+        }
+//        vh.tv5.setText(getItem(position).getLikes_count());
         options.setFadeIn(true).setCircular(true)
                 .setLoadingDrawableId(R.mipmap.icon_picblank);
         x.image().bind(vh.iv1,getItem(position).getAuthor().getAvatar_url(), options.build());

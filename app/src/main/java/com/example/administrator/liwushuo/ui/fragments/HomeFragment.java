@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/9/18 0018.
+ *
  */
 public class HomeFragment extends BaseFragment {
     public static final String TAG = HomeFragment.class.getSimpleName();
@@ -50,10 +51,12 @@ public class HomeFragment extends BaseFragment {
         mSignin = ((ImageView) layout.findViewById(R.id.home_signin));
         mTablayout = ((TabLayout) layout.findViewById(R.id.home_tablayout));
         mViewPager = ((ViewPager) layout.findViewById(R.id.home_viewpager));
-
+        mTablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         mAdapter = new HomeAdapter(getChildFragmentManager(),null);
         mViewPager.setAdapter(mAdapter);
-    }
+        mTablayout.setupWithViewPager(mViewPager);
+
+}
 
     private void setupView() {
         RequestParams requestParams = new RequestParams(HttpConstant.HOME_TABLAYOUT);
@@ -65,7 +68,7 @@ public class HomeFragment extends BaseFragment {
                 List<TabModel.DataBean.ChannelsBean> titles = tabModel.getData().getChannels();
                 mAdapter.setTitles(titles);
                 int size = titles.size();
-                List<Fragment> data = new ArrayList<Fragment>();
+                List<Fragment> data = new ArrayList<>();
                 for (int i = 0; i < size; i++) {
                     HomeItemFragment fragment = new HomeItemFragment();
                     Bundle args = new Bundle();
@@ -78,7 +81,7 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                Log.e(TAG, "onError: " );
             }
 
             @Override

@@ -2,15 +2,18 @@ package com.example.administrator.liwushuo.ui.fragments.homefragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.administrator.liwushuo.R;
 import com.example.administrator.liwushuo.adapters.HomeItemAdapter;
 import com.example.administrator.liwushuo.constant.HttpConstant;
 import com.example.administrator.liwushuo.model.homemodel.HomeList;
+import com.example.administrator.liwushuo.model.homemodel.ItemsBean;
 import com.example.administrator.liwushuo.ui.fragments.BaseFragment;
 import com.google.gson.Gson;
 
@@ -25,6 +28,7 @@ import java.util.List;
  */
 public class HomeItemFragment extends BaseFragment {
 
+    private static final String TAG = HomeItemFragment.class.getSimpleName();
     private ListView mListView;
     private int id;
     private HomeItemAdapter mAdapter;
@@ -34,10 +38,15 @@ public class HomeItemFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layout = inflater.inflate(R.layout.home_fragment_item_one,container,false);
         Bundle bundle = getArguments();
-        int id = bundle.getInt("id");
+        id = bundle.getInt("id");
         initView();
         setupView();
         return layout;
+        //测试：
+//        View inflate = inflater.inflate(R.layout.home_fragment_iten_test, container, false);
+//        TextView id1 = (TextView) inflate.findViewById(R.id.home_fragment_item_id);
+//        id1.setText(String.valueOf(id));
+//        return inflate;
     }
 
     private void initView() {
@@ -53,12 +62,16 @@ public class HomeItemFragment extends BaseFragment {
             public void onSuccess(String result) {
                 Gson gson = new Gson();
                 HomeList homeList = gson.fromJson(result, HomeList.class);
-                List<HomeList.DataBean.ItemsBean> data = homeList.getData().getItems();
+                Log.e(TAG, "onSuccess: "+result  );
+                Log.e(TAG, "onSuccess: "+homeList.getData().getItems().size() );
+                List<ItemsBean> data = homeList.getData().getItems();
+                mAdapter.upData(data);
+                Log.e(TAG, "onSuccess: " );
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                Log.e(TAG, "onError: " );
             }
 
             @Override
