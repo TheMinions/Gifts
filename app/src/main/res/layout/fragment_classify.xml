@@ -10,13 +10,14 @@
         android:layout_width="match_parent"
         android:background="#f43b3b"
         android:id="@+id/classify_fragment_relayout">
-
+<!-- -->
     <android.support.design.widget.TabLayout
         android:layout_height="50dp"
         android:layout_width="match_parent"
         android:id="@+id/classify_fragment_tablayout"
         app:tabIndicatorColor="#fff"
         app:tabTextColor="#f9f8f3"
+        app:tabGravity="center"
         android:layout_centerVertical="true"/>
 
 </RelativeLayout>

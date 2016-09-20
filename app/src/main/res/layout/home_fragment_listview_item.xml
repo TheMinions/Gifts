@@ -16,13 +16,14 @@
             android:textColor="#ff0000"
             android:background="#f98dd1"
             android:layout_margin="10dp"
+            android:maxLines="1"
             android:text = "涨姿势"/>
         <TextView
             android:id="@+id/home_fragment_item_column_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20sp"
+            android:maxLines="1"
             android:text="shall we talk"
             />
         <ImageView
@@ -35,14 +36,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
+            android:maxLines="1"
             android:text="miss.talk"/>
     </LinearLayout>
     <ImageView
         android:id="@+id/home_fragment_item_picture"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="center"
-        android:src="@mipmap/icon_picblank"/>
+        android:scaleType="fitXY"
+        android:src="@mipmap/image_default"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -56,6 +58,7 @@
             android:layout_weight="1"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
+            android:maxLines="1"
             android:text="题目介绍"/>
         <TextView
             android:id="@+id/home_fragment_item_likes"
