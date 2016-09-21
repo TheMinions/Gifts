@@ -17,6 +17,7 @@ import com.example.administrator.liwushuo.adapters.HomeAdapter;
 import com.example.administrator.liwushuo.constant.HttpConstant;
 import com.example.administrator.liwushuo.model.homemodel.TabModel;
 import com.example.administrator.liwushuo.ui.fragments.homefragments.HomeItemFragment;
+import com.example.administrator.liwushuo.ui.fragments.homefragments.HomeItemFragmentOne;
 import com.google.gson.Gson;
 
 import org.xutils.common.Callback;
@@ -70,11 +71,19 @@ public class HomeFragment extends BaseFragment {
                 int size = titles.size();
                 List<Fragment> data = new ArrayList<>();
                 for (int i = 0; i < size; i++) {
-                    HomeItemFragment fragment = new HomeItemFragment();
-                    Bundle args = new Bundle();
-                    args.putInt("id",titles.get(i).getId());
-                    fragment.setArguments(args);
-                    data.add(fragment);
+                    if (i == 0) {
+                        HomeItemFragmentOne fragmentOne = new HomeItemFragmentOne();
+                        Bundle args = new Bundle();
+                        args.putInt("id",titles.get(i).getId());
+                        fragmentOne.setArguments(args);
+                        data.add(fragmentOne);
+                    }else {
+                        HomeItemFragment fragment = new HomeItemFragment();
+                        Bundle args = new Bundle();
+                        args.putInt("id",titles.get(i).getId());
+                        fragment.setArguments(args);
+                        data.add(fragment);
+                    }
                 }
                 mAdapter.upData(data);
             }

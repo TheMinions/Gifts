@@ -10,6 +10,8 @@ public class HttpConstant {
     public static final String HOME_TABLAYOUT="http://api.liwushuo.com/v2/channels/preset?gender=1&generation=2";
     //首页的碎片接口
     public static final String HOME_FRAGMENT="http://api.liwushuo.com/v2/channels/";
+    //viewpager
+    public static final String HOME_VIEWPAGER="http://api.liwushuo.com/v2/banners";
 
 //    榜单的接口
     public static final String TOPLIST_URL="";

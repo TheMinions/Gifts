@@ -49,6 +49,12 @@ public class HomeItemAdapter extends BaseAdapter {
             Log.e(TAG, "upData: " +this.data.size());
         }
     }
+    public void addRes(List<ItemsBean> data){
+        if (data != null) {
+            this.data.addAll(data);
+            notifyDataSetChanged();
+        }
+    }
 
     @Override
     public int getCount() {
@@ -84,7 +90,7 @@ public class HomeItemAdapter extends BaseAdapter {
         }
         if (getItem(position).getColumn()!=null) {
             vh.tv1.setText(getItem(position).getColumn().getCategory());
-            vh.tv1.setBackgroundColor(Color.parseColor("f98dd1"));
+            vh.tv1.setBackgroundColor(Color.parseColor("#f98dd1"));
         }else {
             vh.tv1.setText("");
             vh.tv1.setBackgroundColor(Color.WHITE);
