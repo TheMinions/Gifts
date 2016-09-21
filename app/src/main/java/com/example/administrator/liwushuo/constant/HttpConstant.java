@@ -16,7 +16,9 @@ public class HttpConstant {
 //    榜单的接口
     public static final String TOPLIST_URL="";
 //    分类的接口
-    public static final String CLASSIFY_URL="";
+    public static final String CLASSIFY_STRTEGY_HEAD="http://api.liwushuo.com/v2/columns";
+    public static final String CLASSIFY_STRTEGY_END="http://api.liwushuo.com/v2/channel_groups/all";
+
 //    我的的接口
     public static final String MINE_URL="";
 }

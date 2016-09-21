@@ -1,4 +1,4 @@
-package com.example.administrator.liwushuo.ui.fragments.classfragment;
+package com.example.administrator.liwushuo.ui.fragments.classfragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

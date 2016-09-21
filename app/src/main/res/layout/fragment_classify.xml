@@ -34,7 +34,7 @@
         android:background="#1000"
         android:id="@+id/classify_fragment_bt_select"
         android:layout_centerVertical="true"
-        android:text="搜索单品、功略"
+        android:text="选份走心好礼送给Ta"
         android:textColor="#a19f9f"
         android:textSize="18sp"
         android:layout_margin="10dp"/>

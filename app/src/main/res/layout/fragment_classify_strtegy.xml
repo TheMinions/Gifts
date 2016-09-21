@@ -1,7 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/classify_fragment_strtegy_llayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+<android.support.design.widget.AppBarLayout
+    android:id="@+id/fragment_strtegy_appbar"
+    android:layout_width="match_parent"
+    android:background="#f7f6f6"
+    android:layout_height="260dp">
+    <!-- layout_scrollFlags
+                     scroll  如果要监听滚动事件，就需要指定标记 scroll
+                     enterAlways 只要下拉滑动就会出现
+                     exitUntilCollapsed  配合折叠ToolBar布局使用时，直接滑到顶部时进行展开，在直接使用的时候，
+                     enterAlwaysCollapsed 配合TooBar布局使用，只要有下滑动作就会展开
+                     collapsedTitleGravity="center"   -->
+    <android.support.design.widget.CollapsingToolbarLayout
+        android:id="@+id/fragment_strtegy_appbar_collapse"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed"
+        android:fitsSystemWindows="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</LinearLayout>
+        <include android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/fragment_strtegy_head"/>
+
+    </android.support.design.widget.CollapsingToolbarLayout>
+
+</android.support.design.widget.AppBarLayout>
+ <android.support.v4.widget.NestedScrollView
+     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content">
+     <include
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         layout="@layout/fragment_strtegy_end"/>
+
+ </android.support.v4.widget.NestedScrollView>
+
+
+
+<!--<ListView-->
+    <!--android:id="@+id/classify_fragment_strtegy_listView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"/>-->
+
+    <ImageView
+        android:id="@+id/classify_fragment_strtegy_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"/>
+</android.support.design.widget.CoordinatorLayout>

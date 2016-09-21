@@ -14,8 +14,8 @@ import android.widget.Button;
 import com.example.administrator.liwushuo.R;
 import com.example.administrator.liwushuo.adapters.ClassifyAdapter;
 import com.example.administrator.liwushuo.ui.SeekActivity;
-import com.example.administrator.liwushuo.ui.fragments.classfragment.OneBrandFragment;
-import com.example.administrator.liwushuo.ui.fragments.classfragment.StrtegyFragment;
+import com.example.administrator.liwushuo.ui.fragments.classfragments.OneBrandFragment;
+import com.example.administrator.liwushuo.ui.fragments.classfragments.StrtegyFragment;
 import com.example.administrator.liwushuo.view.CubeTransformer;
 
 import java.util.ArrayList;
@@ -58,6 +58,7 @@ public class ClassifyFragment extends BaseFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SeekActivity.class);
                 startActivity(intent);
+                //设置动画效果
                 getActivity().overridePendingTransition(R.anim.anim_activity_start,R.anim.anim_activity_close);
             }
         });
