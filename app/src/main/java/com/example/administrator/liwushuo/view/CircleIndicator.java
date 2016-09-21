@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.administrator.liwushuo.R;
+import com.example.administrator.liwushuo.adapters.HomeHeaderAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.List;
  * Created by Administrator on 2016/9/20 0020.
  */
 public class CircleIndicator  extends View {
+    private static final String TAG = CircleIndicator.class.getSimpleName();
     private ViewPager viewPager;
     private List<ShapeHolder> tabItems;
     private ShapeHolder movingItem;
@@ -91,6 +93,7 @@ public class CircleIndicator  extends View {
 
     public void setViewPager(final ViewPager viewPager){
         this.viewPager = viewPager;
+        Log.e(TAG, "setViewPager: " );
         createTabItems();
         createMovingItem();
         setUpListener();
@@ -124,12 +127,13 @@ public class CircleIndicator  extends View {
     private void trigger(int position,float positionOffset){
         CircleIndicator.this.mCurItemPosition = position;
         CircleIndicator.this.mCurItemPositionOffset = positionOffset;
-        Log.e("CircleIndicator", "onPageScrolled()" + position + ":" + positionOffset);
+//        Log.e("CircleIndicator", "onPageScrolled()" + position + ":" + positionOffset);
         requestLayout();
         invalidate();
     }
     private void createTabItems() {
-        for (int i = 0; i < viewPager.getAdapter().getCount(); i++) {
+        Log.e(TAG, "createTabItems: "+ ((HomeHeaderAdapter) viewPager.getAdapter()).getRealCount());
+        for (int i = 0; i < ((HomeHeaderAdapter) viewPager.getAdapter()).getRealCount(); i++) {
             OvalShape circle = new OvalShape();
             ShapeDrawable drawable = new ShapeDrawable(circle);
             ShapeHolder shapeHolder = new ShapeHolder(drawable);
@@ -138,10 +142,12 @@ public class CircleIndicator  extends View {
             paint.setAntiAlias(true);
             shapeHolder.setPaint(paint);
             tabItems.add(shapeHolder);
+            Log.e(TAG, "createTabItems:               导航点加载了："+i );
         }
     }
 
     private void createMovingItem() {
+        Log.e(TAG, "createMovingItem: " );
         OvalShape circle = new OvalShape();
         ShapeDrawable drawable = new ShapeDrawable(circle);
         movingItem = new ShapeHolder(drawable);

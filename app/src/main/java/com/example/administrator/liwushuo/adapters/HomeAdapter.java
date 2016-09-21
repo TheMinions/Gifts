@@ -30,7 +30,7 @@ public class HomeAdapter extends FragmentPagerAdapter {
     public void setTitles(List<TabModel.DataBean.ChannelsBean> titles){
         if (titles != null) {
             this.titles.addAll(titles);
-            Log.e(TAG, "setTitles:   "+titles.size() );
+
         }
     }
     public void upData(List<Fragment> data){
@@ -38,7 +38,7 @@ public class HomeAdapter extends FragmentPagerAdapter {
             this.data.clear();
             this.data.addAll(data);
             notifyDataSetChanged();
-            Log.e(TAG, "upData: " );
+
         }
     }
 

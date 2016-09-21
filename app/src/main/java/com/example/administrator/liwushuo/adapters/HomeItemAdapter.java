@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.administrator.liwushuo.R;
@@ -46,7 +47,7 @@ public class HomeItemAdapter extends BaseAdapter {
             this.data.clear();
             this.data.addAll(data);
             notifyDataSetChanged();
-            Log.e(TAG, "upData: " +this.data.size());
+
         }
     }
     public void addRes(List<ItemsBean> data){
@@ -84,10 +85,15 @@ public class HomeItemAdapter extends BaseAdapter {
             vh.tv5 = (TextView) convertView.findViewById(R.id.home_fragment_item_likes);
             vh.iv1 = (ImageView) convertView.findViewById(R.id.home_fragment_item_portrait);
             vh.iv2 = (ImageView) convertView.findViewById(R.id.home_fragment_item_picture);
+            vh.tv6 = (TextView) convertView.findViewById(R.id.home_listview_item_up);
+            vh.tv7 = (TextView) convertView.findViewById(R.id.home_listview_item_down);
+            vh.time = (LinearLayout) convertView.findViewById(R.id.home_listview_item_time);
             convertView.setTag(vh);
         }else {
             vh = (ViewHolder) convertView.getTag();
         }
+
+
         if (getItem(position).getColumn()!=null) {
             vh.tv1.setText(getItem(position).getColumn().getCategory());
             vh.tv1.setBackgroundColor(Color.parseColor("#f98dd1"));
@@ -117,6 +123,8 @@ public class HomeItemAdapter extends BaseAdapter {
         Picasso.with(mContext).load(getItem(position).getCover_image_url())
                 .placeholder(R.mipmap.image_default).error(R.mipmap.icon_picblank)
                 .into(vh.iv2);
+        int updated_at = getItem(position).getUpdated_at();
+
         return convertView;
     }
     class ViewHolder{
@@ -134,7 +142,11 @@ public class HomeItemAdapter extends BaseAdapter {
         TextView tv4;
         //收藏人数
         TextView tv5;
-
-
+        //时间条
+        LinearLayout time;
+        //时间条上部分
+        TextView tv6;
+        //时间条下部分
+        TextView tv7;
     }
 }

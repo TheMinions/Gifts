@@ -12,6 +12,8 @@ public class HttpConstant {
     public static final String HOME_FRAGMENT="http://api.liwushuo.com/v2/channels/";
     //viewpager
     public static final String HOME_VIEWPAGER="http://api.liwushuo.com/v2/banners";
+    //横向scroll
+    public static final String HOME_SCROLL="http://api.liwushuo.com/v2/secondary_banners?gender=1&generation=2";
 
 //    榜单的接口
     public static final String TOPLIST_URL="";

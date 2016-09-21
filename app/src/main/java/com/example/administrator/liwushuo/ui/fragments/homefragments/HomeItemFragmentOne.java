@@ -1,23 +1,29 @@
 package com.example.administrator.liwushuo.ui.fragments.homefragments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.example.administrator.liwushuo.R;
+import com.example.administrator.liwushuo.adapters.HomeHeaderAdapter;
 import com.example.administrator.liwushuo.adapters.HomeItemAdapter;
 import com.example.administrator.liwushuo.constant.HttpConstant;
 import com.example.administrator.liwushuo.model.homemodel.HomeHeaderOne;
 import com.example.administrator.liwushuo.model.homemodel.HomeHeaderTwo;
 import com.example.administrator.liwushuo.model.homemodel.HomeList;
 import com.example.administrator.liwushuo.model.homemodel.ItemsBean;
+import com.example.administrator.liwushuo.ui.HomeRaidersActivity;
 import com.example.administrator.liwushuo.ui.fragments.BaseFragment;
 import com.example.administrator.liwushuo.view.CircleIndicator;
 import com.google.gson.Gson;
@@ -29,14 +35,17 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  */
-public class HomeItemFragmentOne extends BaseFragment implements PullToRefreshListView.OnRefreshListener2{
+public class HomeItemFragmentOne extends BaseFragment implements PullToRefreshListView.OnRefreshListener2, ViewPager.OnPageChangeListener ,Handler.Callback, AdapterView.OnItemClickListener {
 
     private static final String TAG = HomeItemFragmentOne.class.getSimpleName();
+    private static final int MOVE = 100;
+    private static final long MOVE_DELAY = 5 * 1000;
     private PullToRefreshListView mPullToRefresh;
     private int id;
     private HomeItemAdapter mAdapter;
@@ -46,6 +55,10 @@ public class HomeItemFragmentOne extends BaseFragment implements PullToRefreshLi
     private ViewPager mHeadViewPager;
     private LinearLayout mScrollContainer;
     private CircleIndicator circleIndicator;
+    private HomeHeaderAdapter mHeaderAdapter;
+    private int currentPage = 400;
+    private Handler mHandler;
+    private View mHeader;
 
     @Nullable
     @Override
@@ -55,25 +68,38 @@ public class HomeItemFragmentOne extends BaseFragment implements PullToRefreshLi
         id = bundle.getInt("id");
         this.inflater = inflater;
         initView();
-        setupHeader(State.DOWM);
+        setupHeader();
         setupView(State.DOWM);
         return layout;
     }
 
-    private void setupHeader(State state) {
+    private void setupHeader() {
         RequestParams requestParams = new RequestParams(HttpConstant.HOME_VIEWPAGER);
         x.http().get(requestParams, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Gson gson=new Gson();
                 HomeHeaderOne homeHeaderOne = gson.fromJson(result, HomeHeaderOne.class);
+                int size = homeHeaderOne.getData().getBanners().size();
+                List<View> data=new ArrayList<>();
 
-
+                for (int i = 0; i < size; i++) {
+                    String image_url = homeHeaderOne.getData().getBanners().get(i).getImage_url();
+                    View view = inflater.inflate(R.layout.home_header_item_one, null);
+                    ImageView picture = (ImageView) view.findViewById(R.id.home_header_item_picture);
+                    Picasso.with(HomeItemFragmentOne.this.getActivity()).load(image_url).placeholder(R.mipmap.image_default).into(picture);
+                    data.add(view);
+                    Log.e(TAG, "onSuccess: "+"\t"+size);
+                }
+                mHeaderAdapter.upData(data);
+                mHeadViewPager.setCurrentItem(currentPage);
+                if (!mHandler.hasMessages(MOVE)) {
+                    mHandler.sendEmptyMessage(MOVE);
+                }
             }
-
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                Log.e(TAG, "onError: " +ex.getMessage());
             }
 
             @Override
@@ -86,7 +112,7 @@ public class HomeItemFragmentOne extends BaseFragment implements PullToRefreshLi
 
             }
         });
-        RequestParams requestParams1 = new RequestParams();
+        RequestParams requestParams1 = new RequestParams(HttpConstant.HOME_SCROLL);
         x.http().get(requestParams1, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -116,6 +142,7 @@ public class HomeItemFragmentOne extends BaseFragment implements PullToRefreshLi
 
             }
         });
+
     }
 
     private void initView() {
@@ -125,18 +152,48 @@ public class HomeItemFragmentOne extends BaseFragment implements PullToRefreshLi
         mPullToRefresh.setMode(PullToRefreshBase.Mode.BOTH);
         mPullToRefresh.setOnRefreshListener(this);
         //头布局
-        View header = inflater.inflate(R.layout.home_fragment_item_one_header, null);
-        mHeadViewPager = ((ViewPager) header.findViewById(R.id.home_fragment_item_header_viewpage));
-        mScrollContainer = (LinearLayout) header.findViewById(R.id.home_fragment_item_header_container);
+        mHeader = inflater.inflate(R.layout.home_fragment_item_one_header, null);
+        mHeadViewPager = ((ViewPager) mHeader.findViewById(R.id.home_fragment_item_header_viewpage));
+        mHeadViewPager.addOnPageChangeListener(this);
+        mScrollContainer = (LinearLayout) mHeader.findViewById(R.id.home_fragment_item_header_container);
         //头布局的适配器
-
-
+        mHeaderAdapter = new HomeHeaderAdapter(null);
+        mHeadViewPager.setAdapter(mHeaderAdapter);
+        mListView.addHeaderView(mHeader);
         //小圆点导航的自定义view
-        circleIndicator = (CircleIndicator)header.findViewById(R.id.indicator);
+        circleIndicator = (CircleIndicator)mHeader.findViewById(R.id.indicator);
         //设置小圆点导航
         circleIndicator.setViewPager(mHeadViewPager);
         mPullToRefresh.setAdapter(mAdapter);
+        mPullToRefresh.setOnItemClickListener(this);
+        mHandler = new Handler(this);
     }
+    //***********************头布局viewpager改变的监听****************************
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        currentPage = position;
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        ItemsBean itemsBean = (ItemsBean) parent.getItemAtPosition(position);
+        String url = itemsBean.getUrl();
+        Intent intent = new Intent(getActivity(), HomeRaidersActivity.class);
+        intent.putExtra("web",url);
+        getActivity().startActivity(intent);
+    }
+
+
     enum State{
         UP,DOWM
     }
@@ -175,6 +232,18 @@ public class HomeItemFragmentOne extends BaseFragment implements PullToRefreshLi
             }
         });
 
+    }
+
+    @Override
+    public boolean handleMessage(Message msg) {
+        switch (msg.what) {
+            case MOVE:
+                currentPage++;
+                mHeadViewPager.setCurrentItem(currentPage);
+                    mHandler.sendEmptyMessageDelayed(MOVE,MOVE_DELAY);
+                break;
+        }
+        return false;
     }
     //*************************************************
     @Override

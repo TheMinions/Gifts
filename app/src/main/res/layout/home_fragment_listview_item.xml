@@ -3,6 +3,33 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#d7d7d7"/>
+    <LinearLayout
+        android:id="@+id/home_listview_item_time"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="40dp">
+        <TextView
+            android:id="@+id/home_listview_item_up"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:gravity="center_horizontal|bottom"
+            android:textSize="16sp"
+            android:text="-- 9月21日 星期三 --"/>
+        <TextView
+            android:id="@+id/home_listview_item_down"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|top"
+            android:textSize="12sp"
+            android:textColor="#ff0000"
+            android:text="下次更新  20:00"/>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
