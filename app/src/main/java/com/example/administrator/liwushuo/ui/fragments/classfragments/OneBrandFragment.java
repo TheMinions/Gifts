@@ -20,6 +20,8 @@ public class OneBrandFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        layout= inflater.inflate(R.layout.fragment_classify_onebrand,container,false);
         return layout;
+
     }
+
 
 }
