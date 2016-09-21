@@ -107,12 +107,10 @@ public class HomeFragment extends BaseFragment implements CompoundButton.OnCheck
 
             @Override
             public void onCancelled(CancelledException cex) {
-
             }
 
             @Override
             public void onFinished() {
-
             }
         });
 

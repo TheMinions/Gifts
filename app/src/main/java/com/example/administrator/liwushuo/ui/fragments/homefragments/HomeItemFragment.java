@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,7 +29,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/9/20 0020.
  */
-public class HomeItemFragment extends BaseFragment implements PullToRefreshListView.OnRefreshListener2{
+public class HomeItemFragment extends BaseFragment implements PullToRefreshListView.OnRefreshListener2, AdapterView.OnItemClickListener {
 
     private static final String TAG = HomeItemFragment.class.getSimpleName();
     private PullToRefreshListView mPullToRefresh;
@@ -59,7 +60,13 @@ public class HomeItemFragment extends BaseFragment implements PullToRefreshListV
         mAdapter = new HomeItemAdapter(null,getActivity());
         mPullToRefresh.setMode(PullToRefreshBase.Mode.BOTH);
         mPullToRefresh.setOnRefreshListener(this);
+        mPullToRefresh.setOnItemClickListener(this);
         mPullToRefresh.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 
     enum State{
@@ -96,7 +103,7 @@ public class HomeItemFragment extends BaseFragment implements PullToRefreshListV
 
             @Override
             public void onFinished() {
-
+                mPullToRefresh.onRefreshComplete();
             }
         });
 

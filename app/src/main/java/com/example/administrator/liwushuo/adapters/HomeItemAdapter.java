@@ -15,12 +15,14 @@ import android.widget.TextView;
 
 import com.example.administrator.liwushuo.R;
 import com.example.administrator.liwushuo.model.homemodel.ItemsBean;
+import com.example.administrator.liwushuo.utils.TimePaserUtils;
 import com.squareup.picasso.Picasso;
 
 import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,6 +33,7 @@ public class HomeItemAdapter extends BaseAdapter {
     private List<ItemsBean> data;
     private LayoutInflater inflater;
     private Context mContext;
+    private String mTime;
     ImageOptions.Builder options = new ImageOptions.Builder();
     public HomeItemAdapter(List<ItemsBean> data, Context context) {
         if (data != null) {
@@ -123,10 +126,47 @@ public class HomeItemAdapter extends BaseAdapter {
         Picasso.with(mContext).load(getItem(position).getCover_image_url())
                 .placeholder(R.mipmap.image_default).error(R.mipmap.icon_picblank)
                 .into(vh.iv2);
-        int updated_at = getItem(position).getUpdated_at();
-
+        String sTime = String.valueOf(getItem(position).getUpdated_at()) + "000";
+        long updated_at = Long.parseLong(sTime);
+        vh.time.setVisibility(View.GONE);
+        String week = (String) TimePaserUtils.getWeek(updated_at);
+        if (position != 0) {
+            if (!week.equals(mTime)) {
+                vh.time.setVisibility(View.VISIBLE);
+            }
+            vh.tv7.setVisibility(View.GONE);
+        }else {
+            vh.time.setVisibility(View.VISIBLE);
+            vh.tv7.setVisibility(View.VISIBLE);
+            vh.tv7.setText("下次更新："+getTime());
+        }
+        mTime = week;
+        vh.tv6.setText("--  "+week+"  --");
+//        Log.e(TAG, "getView: "+mTime+"\t"+week +"\t"+updated_at);
         return convertView;
     }
+
+    private String getTime() {
+        Date date=new Date();
+        long time = date.getTime();
+        Log.e(TAG, "getTime: "+time );
+        String clock = (String) TimePaserUtils.getTime(time);
+        int timeInt = clock.charAt(0) *10 * 60 * 60
+                + clock.charAt(1) * 60 * 60
+                + clock.charAt(3) * 10 * 60
+                + clock.charAt(4) * 60;
+        if (timeInt < 8 *3600) {
+            return "8:00";
+        }else if(timeInt < 11 * 3600){
+            return "11:00";
+        }else if(timeInt < 17 * 3600){
+            return "17:00";
+        }else if(timeInt < 20 * 3600){
+            return "20:00";
+        }
+        return "次日 8:00";
+    }
+
     class ViewHolder{
         //分类
         TextView tv1;

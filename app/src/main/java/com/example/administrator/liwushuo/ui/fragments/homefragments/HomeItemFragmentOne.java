@@ -212,7 +212,6 @@ public class HomeItemFragmentOne extends BaseFragment implements PullToRefreshLi
                     mAdapter.addRes(data);
                     mPullToRefresh.onRefreshComplete();
                 }
-                Log.e(TAG, "onSuccess: " );
             }
 
             @Override
@@ -228,7 +227,7 @@ public class HomeItemFragmentOne extends BaseFragment implements PullToRefreshLi
 
             @Override
             public void onFinished() {
-
+                mPullToRefresh.onRefreshComplete();
             }
         });
 
