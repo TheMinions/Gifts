@@ -1,8 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:background="#ff0000"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/ll_hot_index"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ff2e48"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="礼物榜"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/toplist_share"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="1dp"
+        android:src="@mipmap/icon_white_share" />
+    </LinearLayout>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/toplist_tl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.design.widget.TabLayout>
 </LinearLayout>
