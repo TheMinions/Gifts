@@ -6,7 +6,7 @@
     app:cardCornerRadius="10dp"
     app:cardElevation="10dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/toplist_item_recycle_item2_pic"
         android:layout_width="match_parent"
@@ -28,6 +28,7 @@
             android:id="@+id/toplist_item_recycle_item2_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLines="2"
             android:padding="5dp"
             android:textSize="14sp"
             android:text="简介"/>
@@ -37,6 +38,7 @@
             android:layout_height="wrap_content"
             android:textColor="#ff0000"
             android:textSize="14sp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
             android:text="价格"
             />

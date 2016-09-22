@@ -2,6 +2,7 @@ package com.example.administrator.liwushuo.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import java.util.Map;
  * Created by Administrator on 2016/9/22 0022.
  */
 public class TopListItenAdapter extends RecyclerView.Adapter<TopListItenAdapter.ViewHolder>{
+    private static final String TAG = TopListItenAdapter.class.getSimpleName();
     private RecyclerView mRecyclerView;
     private TopList.DataBean data;
     private LayoutInflater inflater;
@@ -78,19 +80,20 @@ public class TopListItenAdapter extends RecyclerView.Adapter<TopListItenAdapter.
                 TextView content = (TextView) holder.getView(R.id.toplist_item_recycle_item2_content);
                 TextView price = (TextView) holder.getView(R.id.toplist_item_recycle_item2_price);
                 name.setText(((TopList.DataBean.ItemsBean) getItem(position)).getName());
-                content.setText(((TopList.DataBean.ItemsBean) getItem(position)).getDescription());
+                content.setText(((TopList.DataBean.ItemsBean) getItem(position)).getShort_description());
                 price.setText("￥ "+((TopList.DataBean.ItemsBean) getItem(position)).getPrice());
-                Picasso.with(mContext).load(((TopList.DataBean) getItem(position)).getCover_image()).placeholder(R.mipmap.image_default)
+                Log.e(TAG, "onBindViewHolder: "+((TopList.DataBean.ItemsBean) getItem(position)).getCover_image_url() );
+                Picasso.with(mContext).load(((TopList.DataBean.ItemsBean) getItem(position)).getCover_image_url()).placeholder(R.mipmap.image_default)
                         .into(pic2);
                 break;
         }
-
 
     }
 
     @Override
     public int getItemCount() {
-        return data!=null?(data.getItems().size()+1):0;
+
+        return data.getItems()!=null?(data.getItems().size()+1):0;
     }
 
     @Override
