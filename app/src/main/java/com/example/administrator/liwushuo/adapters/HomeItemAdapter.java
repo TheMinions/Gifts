@@ -135,11 +135,11 @@ public class HomeItemAdapter extends BaseAdapter {
                 vh.time.setVisibility(View.VISIBLE);
             }
             vh.tv7.setVisibility(View.GONE);
-        }else {
-            vh.time.setVisibility(View.VISIBLE);
-            vh.tv7.setVisibility(View.VISIBLE);
-            vh.tv7.setText("下次更新："+getTime());
-        }
+    }else {
+        vh.time.setVisibility(View.VISIBLE);
+        vh.tv7.setVisibility(View.VISIBLE);
+        vh.tv7.setText("下次更新："+getTime());
+    }
         mTime = week;
         vh.tv6.setText("--  "+week+"  --");
 //        Log.e(TAG, "getView: "+mTime+"\t"+week +"\t"+updated_at);
