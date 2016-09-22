@@ -1,8 +1,6 @@
 package com.example.administrator.liwushuo.adapters;
 
-
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,60 +13,56 @@ import android.widget.TextView;
 
 import com.example.administrator.liwushuo.R;
 import com.example.administrator.liwushuo.model.homemodel.ItemsBean;
-import com.example.administrator.liwushuo.utils.TimePaserUtils;
+import com.example.administrator.liwushuo.model.homemodel.ListBottom;
 import com.squareup.picasso.Picasso;
 
 import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+
 /**
- * Created by Administrator on 2016/9/20 0020.
+ * Created by Administrator on 2016/9/22 0022.
  */
-public class HomeItemAdapter extends BaseAdapter {
-    private static final String TAG = HomeItemAdapter.class.getSimpleName();
-    private List<ItemsBean> data;
+public class ListBottomAdapter extends BaseAdapter {
+    private static final String TAG = ListBottomAdapter.class.getSimpleName();
+    private List<ListBottom.DataBean.PostsBean> data;
     private LayoutInflater inflater;
     private Context mContext;
-    private String mTime;
     ImageOptions.Builder options = new ImageOptions.Builder();
-    private boolean isVisable;
-    public HomeItemAdapter(List<ItemsBean> data, Context context,boolean isVisable) {
+
+    public ListBottomAdapter(Context context,List<ListBottom.DataBean.PostsBean> data) {
+        inflater = LayoutInflater.from(context);
+        mContext = context;
         if (data != null) {
             this.data = data;
         }else {
             this.data = new ArrayList<>();
         }
-        mContext = context;
-        inflater = LayoutInflater.from(context);
-        this.isVisable = isVisable;
     }
-
-    public void upData(List<ItemsBean> data){
+    public void upData(List<ListBottom.DataBean.PostsBean> data){
         if (data != null) {
             this.data.clear();
             this.data.addAll(data);
             notifyDataSetChanged();
-
+            Log.e(TAG, "upData: " );
         }
     }
-    public void addRes(List<ItemsBean> data){
+    public void addRes(List<ListBottom.DataBean.PostsBean> data){
         if (data != null) {
             this.data.addAll(data);
             notifyDataSetChanged();
         }
     }
-
     @Override
     public int getCount() {
-        return data != null ? data.size():0;
+        return data!=null?data.size():0;
     }
 
     @Override
-    public ItemsBean getItem(int position) {
+    public ListBottom.DataBean.PostsBean getItem(int position) {
         return data.get(position);
     }
 
@@ -79,7 +73,7 @@ public class HomeItemAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder vh  = null;
+        ViewHolder vh = null;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.home_fragment_listview_item,parent,false);
             vh = new ViewHolder();
@@ -97,6 +91,7 @@ public class HomeItemAdapter extends BaseAdapter {
         }else {
             vh = (ViewHolder) convertView.getTag();
         }
+        vh.time.setVisibility(View.GONE);
         if (getItem(position).getColumn()!=null) {
             vh.tv1.setText(getItem(position).getColumn().getCategory());
             vh.tv1.setBackgroundColor(Color.parseColor("#f98dd1"));
@@ -126,49 +121,7 @@ public class HomeItemAdapter extends BaseAdapter {
         Picasso.with(mContext).load(getItem(position).getCover_image_url())
                 .placeholder(R.mipmap.image_default).error(R.mipmap.icon_picblank)
                 .into(vh.iv2);
-        String sTime = String.valueOf(getItem(position).getUpdated_at()) + "000";
-        long updated_at = Long.parseLong(sTime);
-        vh.time.setVisibility(View.GONE);
-        String week = (String) TimePaserUtils.getWeek(updated_at);
-        if (position != 0) {
-            if (!week.equals(mTime)) {
-                vh.time.setVisibility(View.VISIBLE);
-            }
-            vh.tv7.setVisibility(View.GONE);
-    }else {
-        vh.time.setVisibility(View.VISIBLE);
-        vh.tv7.setVisibility(View.VISIBLE);
-        vh.tv7.setText("下次更新："+getTime());
-    }
-        mTime = week;
-        vh.tv6.setText("--  "+week+"  --");
-//        Log.e(TAG, "getView: "+mTime+"\t"+week +"\t"+updated_at);
-        if (isVisable) {
-            vh.time.setVisibility(View.VISIBLE);
-            isVisable = false;
-        }
         return convertView;
-    }
-
-    private String getTime() {
-        Date date=new Date();
-        long time = date.getTime();
-        Log.e(TAG, "getTime: "+time );
-        String clock = (String) TimePaserUtils.getTime(time);
-        int timeInt = clock.charAt(0) *10 * 60 * 60
-                + clock.charAt(1) * 60 * 60
-                + clock.charAt(3) * 10 * 60
-                + clock.charAt(4) * 60;
-        if (timeInt < 8 *3600) {
-            return "8:00";
-        }else if(timeInt < 11 * 3600){
-            return "11:00";
-        }else if(timeInt < 17 * 3600){
-            return "17:00";
-        }else if(timeInt < 20 * 3600){
-            return "20:00";
-        }
-        return "次日 8:00";
     }
 
     class ViewHolder{

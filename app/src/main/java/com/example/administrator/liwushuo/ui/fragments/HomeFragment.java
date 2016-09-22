@@ -139,6 +139,7 @@ public class HomeFragment extends BaseFragment implements CompoundButton.OnCheck
             }
         }else if(!isChecked){
             popupWindow.dismiss();
+
         }
     }
 
@@ -157,5 +158,6 @@ public class HomeFragment extends BaseFragment implements CompoundButton.OnCheck
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         mViewPager.setCurrentItem(position);
         popupWindow.dismiss();
+        mIsOpen.setChecked(false);
     }
 }

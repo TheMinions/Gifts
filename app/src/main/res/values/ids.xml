@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="recycler" type="id"/>
+    <item name="header_two" type="id">201</item>
+    <item name="header_one" type="id">200</item>
 </resources>

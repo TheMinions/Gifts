@@ -57,7 +57,7 @@ public class HomeItemFragment extends BaseFragment implements PullToRefreshListV
     private void initView() {
         mPullToRefresh = ((PullToRefreshListView) layout.findViewById(R.id.home_fragment_listview));
         mListView = mPullToRefresh.getRefreshableView();
-        mAdapter = new HomeItemAdapter(null,getActivity());
+        mAdapter = new HomeItemAdapter(null,getActivity(),false);
         mPullToRefresh.setMode(PullToRefreshBase.Mode.BOTH);
         mPullToRefresh.setOnRefreshListener(this);
         mPullToRefresh.setOnItemClickListener(this);

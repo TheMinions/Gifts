@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.administrator.liwushuo.R;
 import com.example.administrator.liwushuo.adapters.HomeHeaderAdapter;
@@ -24,6 +25,7 @@ import com.example.administrator.liwushuo.model.homemodel.HomeHeaderTwo;
 import com.example.administrator.liwushuo.model.homemodel.HomeList;
 import com.example.administrator.liwushuo.model.homemodel.ItemsBean;
 import com.example.administrator.liwushuo.ui.HomeRaidersActivity;
+import com.example.administrator.liwushuo.ui.ListBottomActivity;
 import com.example.administrator.liwushuo.ui.fragments.BaseFragment;
 import com.example.administrator.liwushuo.view.CircleIndicator;
 import com.google.gson.Gson;
@@ -41,7 +43,7 @@ import java.util.List;
 /**
  *
  */
-public class HomeItemFragmentOne extends BaseFragment implements PullToRefreshListView.OnRefreshListener2, ViewPager.OnPageChangeListener ,Handler.Callback, AdapterView.OnItemClickListener {
+public class HomeItemFragmentOne extends BaseFragment implements PullToRefreshListView.OnRefreshListener2, ViewPager.OnPageChangeListener ,Handler.Callback, AdapterView.OnItemClickListener, View.OnClickListener {
 
     private static final String TAG = HomeItemFragmentOne.class.getSimpleName();
     private static final int MOVE = 100;
@@ -87,6 +89,8 @@ public class HomeItemFragmentOne extends BaseFragment implements PullToRefreshLi
                     String image_url = homeHeaderOne.getData().getBanners().get(i).getImage_url();
                     View view = inflater.inflate(R.layout.home_header_item_one, null);
                     ImageView picture = (ImageView) view.findViewById(R.id.home_header_item_picture);
+                    picture.setTag(R.id.header_one,homeHeaderOne.getData().getBanners().get(i));
+                    picture.setOnClickListener(HomeItemFragmentOne.this);
                     Picasso.with(HomeItemFragmentOne.this.getActivity()).load(image_url).placeholder(R.mipmap.image_default).into(picture);
                     data.add(view);
                     Log.e(TAG, "onSuccess: "+"\t"+size);
@@ -122,6 +126,8 @@ public class HomeItemFragmentOne extends BaseFragment implements PullToRefreshLi
                 for (int i = 0; i < size; i++) {
                     View inflate = inflater.inflate(R.layout.home_header_item_two, null);
                     ImageView pictuer = (ImageView) inflate.findViewById(R.id.home_header_item_picture2);
+                    pictuer.setTag(R.id.header_two,headerTwo.getData().getSecondary_banners().get(i).getTarget_url());
+                    pictuer.setOnClickListener(HomeItemFragmentOne.this);
                     Picasso.with(HomeItemFragmentOne.this.getActivity()).load(headerTwo.getData().getSecondary_banners().get(i).getImage_url()).placeholder(R.mipmap.image_default).into(pictuer);
                     mScrollContainer.addView(inflate);
                 }
@@ -148,7 +154,7 @@ public class HomeItemFragmentOne extends BaseFragment implements PullToRefreshLi
     private void initView() {
         mPullToRefresh = ((PullToRefreshListView) layout.findViewById(R.id.home_fragment_listview));
         mListView = mPullToRefresh.getRefreshableView();
-        mAdapter = new HomeItemAdapter(null,getActivity());
+        mAdapter = new HomeItemAdapter(null,getActivity(),true);
         mPullToRefresh.setMode(PullToRefreshBase.Mode.BOTH);
         mPullToRefresh.setOnRefreshListener(this);
         //头布局
@@ -191,6 +197,37 @@ public class HomeItemFragmentOne extends BaseFragment implements PullToRefreshLi
         Intent intent = new Intent(getActivity(), HomeRaidersActivity.class);
         intent.putExtra("web",url);
         getActivity().startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        HomeHeaderOne.DataBean.BannersBean tag1 = (HomeHeaderOne.DataBean.BannersBean) v.getTag(R.id.header_one);
+        String tag2 = (String) v.getTag(R.id.header_two);
+        if (tag1 != null) {
+            if (tag1.getTarget()==null) {
+                Toast.makeText(HomeItemFragmentOne.this.getActivity(), "你点击的接口没抓到，木有啊！", Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent();
+//                intent.putExtra("web","");
+//                startActivity(intent);
+            }else {
+                int id = tag1.getTarget().getId();
+                Intent intent = new Intent(getActivity(), ListBottomActivity.class);
+                intent.putExtra("id",id);
+                startActivity(intent);
+            }
+        }else if(tag2 != null){
+            Toast.makeText(HomeItemFragmentOne.this.getActivity(), "你点击的scrollview是第"+tag2+"张", Toast.LENGTH_SHORT).show();
+            String[] split = tag2.split("=");
+            if (split.length == 3) {
+                String id = split[2];
+                Intent intent = new Intent(getActivity(), ListBottomActivity.class);
+                intent.putExtra("id",id);
+                startActivity(intent);
+            }else {
+                Toast.makeText(HomeItemFragmentOne.this.getActivity(), "你点击的页面比较复杂，没做！！", Toast.LENGTH_SHORT).show();
+            }
+        }
+
     }
 
 
