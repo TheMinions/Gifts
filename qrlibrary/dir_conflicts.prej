@@ -1,0 +1,9 @@
+Trying to add new property 'svn:ignore'
+but the property already exists.
+<<<<<<< (local property value)
+build
+||||||| (incoming 'changed from' value)
+=======
+build
+qrlibrary.iml
+>>>>>>> (incoming 'changed to' value)
