@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -19,6 +19,7 @@
                 android:layout_height="40dp">
 
                 <ImageView
+                    android:id="@+id/mine_msg_login"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_marginLeft="12dp"
@@ -26,7 +27,7 @@
                     android:src="@mipmap/icon_bind_message" />
 
                 <ImageView
-                    android:id="@+id/iv_profile_show"
+                    android:id="@+id/settings"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_alignParentRight="true"
@@ -35,11 +36,12 @@
                     android:src="@mipmap/me_setting" />
 
                 <ImageView
+                    android:id="@+id/iv_profile_show"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_marginRight="25dp"
                     android:layout_marginTop="12dp"
-                    android:layout_toLeftOf="@+id/iv_profile_show"
+                    android:layout_toLeftOf="@+id/settings"
                     android:src="@mipmap/icon_scan" />
             </RelativeLayout>
 
@@ -182,6 +184,71 @@
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:background="#d9d4d4" />
+    </LinearLayout>
+   <RadioGroup
+       android:id="@+id/mine_rg1"
+       android:orientation="horizontal"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <LinearLayout
+           android:orientation="vertical"
+           android:layout_weight="1"
+           android:layout_width="0dp"
+           android:layout_height="60dp">
+           <RadioButton
+               android:id="@+id/mine_rb1"
+               android:textColor="#3e3b3b"
+               android:button="@null"
+               android:text="单品"
+               android:gravity="center"
+               android:textSize="18sp"
+               android:layout_width="match_parent"
+               android:layout_height="58dp" />
+           <View
+               android:visibility="visible"
+               android:id="@+id/mine_view_rb1"
+               android:background="#ff0000"
+               android:layout_width="match_parent"
+               android:layout_height="2dp"/>
+       </LinearLayout>
+       <LinearLayout
+           android:orientation="vertical"
+           android:layout_weight="1"
+           android:layout_width="0dp"
+           android:layout_height="60dp">
+           <RadioButton
+               android:id="@+id/mine_rb2"
+               android:button="@null"
+               android:text="攻略"
+               android:textColor="#3e3b3b"
+               android:gravity="center"
+               android:textSize="18sp"
+               android:layout_width="match_parent"
+               android:layout_height="58dp" />
+           <View
+               android:visibility="gone"
+               android:id="@+id/mine_view_rb2"
+               android:background="#ff0000"
+               android:layout_width="match_parent"
+               android:layout_height="2dp"/>
+       </LinearLayout>
+   </RadioGroup>
+    <LinearLayout
+        android:id="@+id/mine_login_linear"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:src="@mipmap/ic_holder_favourite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:text="登录以享受更多功能"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>
 

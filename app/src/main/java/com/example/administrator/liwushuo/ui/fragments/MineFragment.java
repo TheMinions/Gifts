@@ -7,10 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.liwushuo.R;
 import com.example.administrator.liwushuo.ui.LoginActivity;
+import com.example.administrator.liwushuo.ui.SettingActivity;
+import com.rock.qrcodelibrary.CaptureActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,6 +27,8 @@ import butterknife.OnClick;
  */
 public class MineFragment extends BaseFragment {
     public static final String TAG = MineFragment.class.getSimpleName();
+    private static final int QR_REQUEST_CODE = 100;
+    private static final int RESULT_OK = -1;
     @BindView(R.id.iv_profile_show)
     ImageView ivProfileShow;
     @BindView(R.id.iv_profile_icon)
@@ -37,6 +45,22 @@ public class MineFragment extends BaseFragment {
     ImageView ivProfileGuanzhu;
     @BindView(R.id.iv_profile_kefu)
     ImageView ivProfileKefu;
+    @BindView(R.id.settings)
+    ImageView settings;
+    @BindView(R.id.mine_rb1)
+    RadioButton mineRb1;
+    @BindView(R.id.mine_rb2)
+    RadioButton mineRb2;
+    @BindView(R.id.mine_rg1)
+    RadioGroup mineRg1;
+    @BindView(R.id.mine_view_rb1)
+    View mineViewRb1;
+    @BindView(R.id.mine_view_rb2)
+    View mineViewRb2;
+    @BindView(R.id.mine_login_linear)
+    LinearLayout mineLoginLinear;
+    @BindView(R.id.mine_msg_login)
+    ImageView mineMsgLogin;
     private LayoutInflater inflater;
 
     @Nullable
@@ -49,10 +73,21 @@ public class MineFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.iv_profile_show, R.id.iv_profile_icon, R.id.tv_pro_name, R.id.iv_profile_gouwu, R.id.iv_profile_dingdan, R.id.iv_profile_liquan, R.id.iv_profile_guanzhu, R.id.iv_profile_kefu})
+    @OnClick({R.id.iv_profile_show,R.id.mine_msg_login, R.id.mine_login_linear, R.id.mine_rb1, R.id.mine_rb2, R.id.iv_profile_icon, R.id.settings, R.id.tv_pro_name, R.id.iv_profile_gouwu, R.id.iv_profile_dingdan, R.id.iv_profile_liquan, R.id.iv_profile_guanzhu, R.id.iv_profile_kefu})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.mine_msg_login:
+                Intent intent10 = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent10);
+                break;
+            case R.id.mine_login_linear:
+                Intent intent9 = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent9);
+                break;
             case R.id.iv_profile_show:
+                // 启动扫描页面
+                Intent intent7 = new Intent(getActivity(), CaptureActivity.class);
+                startActivityForResult(intent7, QR_REQUEST_CODE);
                 break;
             case R.id.iv_profile_icon:
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
@@ -82,6 +117,29 @@ public class MineFragment extends BaseFragment {
                 Intent intent6 = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent6);
                 break;
+            case R.id.settings:
+                Intent intent8 = new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent8);
+                break;
+            case R.id.mine_rb1:
+                mineViewRb1.setVisibility(View.VISIBLE);
+                mineViewRb2.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.mine_rb2:
+                mineViewRb1.setVisibility(View.INVISIBLE);
+                mineViewRb2.setVisibility(View.VISIBLE);
+                break;
+            case R.id.mine_rg1:
+                break;
+        }
+    }
+
+    //      扫描结果
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == QR_REQUEST_CODE) {
+            Toast.makeText(getActivity(), "扫描成功", Toast.LENGTH_SHORT).show();
         }
     }
 }
