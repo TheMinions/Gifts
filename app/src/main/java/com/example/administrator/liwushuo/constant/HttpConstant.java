@@ -22,8 +22,11 @@ public class HttpConstant {
     //榜单的接口VIEWPAGER
     public static final String TOPLIST_FRAGMENT="http://api.liwushuo.com/v2/ranks_v2/ranks/";
 //    分类的接口
+    //攻略
     public static final String CLASSIFY_STRTEGY_HEAD="http://api.liwushuo.com/v2/columns";
     public static final String CLASSIFY_STRTEGY_END="http://api.liwushuo.com/v2/channel_groups/all";
+   //单品
+    public static final String ONEBRAND="http://api.liwushuo.com/v2/item_categories/tree";
 
     //搜索
     public static final String SEEKMORE="http://api.liwushuo.com/v2/search/hot_words";

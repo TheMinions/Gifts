@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:background="#fcfbfa"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:id="@+id/onbrand_right_linelayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:orientation="horizontal">
+    <View
+        android:id="@+id/onbrand_right_line"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="1dp"
+        android:background="#cec9c9"
+        android:layout_gravity="center"
+        />
+        <TextView
+            android:id="@+id/onbrand_right_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="热门饰品"
+            android:textSize="16sp"
+            android:layout_gravity="center"/>
+    <View
+        android:id="@+id/onbrand_right_line2"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="1dp"
+        android:background="#cec9c9"
+        android:layout_gravity="center"
+        />
+</LinearLayout>
+<com.example.administrator.liwushuo.view.RewriterGridView
+    android:id="@+id/onbrand_right_gridView"
+    android:layout_below="@+id/onbrand_right_linelayout"
+    android:layout_marginTop="10dp"
+    android:numColumns="3"
+    android:layout_centerInParent="true"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+</com.example.administrator.liwushuo.view.RewriterGridView>
+
+</RelativeLayout>
