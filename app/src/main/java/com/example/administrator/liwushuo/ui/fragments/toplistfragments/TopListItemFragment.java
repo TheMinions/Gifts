@@ -7,9 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.administrator.liwushuo.R;
-import com.example.administrator.liwushuo.adapters.TopListItenAdapter;
+import com.example.administrator.liwushuo.adapters.TopListItemAdapter;
 import com.example.administrator.liwushuo.constant.HttpConstant;
 import com.example.administrator.liwushuo.model.toplistmodel.TopList;
 import com.example.administrator.liwushuo.ui.fragments.BaseFragment;
@@ -24,11 +25,11 @@ import org.xutils.x;
 /**
  *
  */
-public class TopListItemFragment extends BaseFragment implements PullToRefreshRecyclerView.OnRefreshListener2{
+public class TopListItemFragment extends BaseFragment implements PullToRefreshRecyclerView.OnRefreshListener2,TopListItemAdapter.PositionClickListener{
     private String mId;
     private PullToRefreshRecyclerView mPullRecycle;
     private int offSet = 0;
-    private TopListItenAdapter mTopListItenAdapter;
+    private TopListItemAdapter mTopListItenAdapter;
     private RecyclerView mRececleView;
 
     @Nullable
@@ -59,8 +60,9 @@ public class TopListItemFragment extends BaseFragment implements PullToRefreshRe
         });
         mRececleView.setLayoutManager(layoutManager);
         //创建适配器
-        mTopListItenAdapter = new TopListItenAdapter(null,getActivity());
+        mTopListItenAdapter = new TopListItemAdapter(null,getActivity());
         mRececleView.setAdapter(mTopListItenAdapter);
+        mTopListItenAdapter.setListener(this);
 
     }
 
@@ -96,6 +98,12 @@ public class TopListItemFragment extends BaseFragment implements PullToRefreshRe
              }
          });
     }
+
+    @Override
+    public void getPosition(int position) {
+        Toast.makeText(TopListItemFragment.this.getActivity(), "你点的是"+position, Toast.LENGTH_SHORT).show();
+    }
+
     enum State{
         DOWN,UP
     }

@@ -23,6 +23,8 @@ public class HttpConstant {
     public static final String TOPLIST_TAB="http://api.liwushuo.com/v2/ranks_v2/ranks";
     //榜单的接口VIEWPAGER
     public static final String TOPLIST_FRAGMENT="http://api.liwushuo.com/v2/ranks_v2/ranks/";
+    //榜单的二级接口
+    public static final String TOPLIST_SKIP_SINGLE="http://api.liwushuo.com/v2/items/";
 //    分类的接口
     //攻略
     public static final String CLASSIFY_STRTEGY_HEAD="http://api.liwushuo.com/v2/columns";

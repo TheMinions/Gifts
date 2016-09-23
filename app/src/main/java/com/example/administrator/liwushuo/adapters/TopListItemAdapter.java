@@ -8,26 +8,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.liwushuo.R;
 import com.example.administrator.liwushuo.model.toplistmodel.TopList;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * Created by Administrator on 2016/9/22 0022.
  */
-public class TopListItenAdapter extends RecyclerView.Adapter<TopListItenAdapter.ViewHolder>{
-    private static final String TAG = TopListItenAdapter.class.getSimpleName();
+public class TopListItemAdapter extends RecyclerView.Adapter<TopListItemAdapter.ViewHolder> implements View.OnClickListener {
+    private static final String TAG = TopListItemAdapter.class.getSimpleName();
     private RecyclerView mRecyclerView;
     private TopList.DataBean data;
     private LayoutInflater inflater;
     private Context mContext;
+    private PositionClickListener mListener;
 
-    public TopListItenAdapter( TopList.DataBean data, Context context) {
+    public TopListItemAdapter(TopList.DataBean data, Context context) {
         inflater = LayoutInflater.from(context);
         mContext = context;
         if (data != null) {
@@ -36,6 +37,10 @@ public class TopListItenAdapter extends RecyclerView.Adapter<TopListItenAdapter.
             this.data = new TopList.DataBean();
         }
 
+    }
+
+    public void setListener(PositionClickListener listener) {
+        mListener = listener;
     }
 
     public void upData(TopList.DataBean data){
@@ -63,6 +68,7 @@ public class TopListItenAdapter extends RecyclerView.Adapter<TopListItenAdapter.
                 itemView = inflater.inflate(R.layout.toplist_item_recycle_item_two,parent,false);
                 break;
         }
+        itemView.setOnClickListener(this);
         return new ViewHolder(itemView);
     }
 
@@ -118,6 +124,19 @@ public class TopListItenAdapter extends RecyclerView.Adapter<TopListItenAdapter.
         return data.getItems().get(position-1);
     }
 
+    @Override
+    public void onClick(View v) {
+        int position = mRecyclerView.getChildAdapterPosition(v);
+        if (mListener != null) {
+            RecyclerView.ItemAnimator animator = mRecyclerView.getItemAnimator();
+            if (animator.isRunning()) {
+                Toast.makeText(mContext, "正在动画，请稍后", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            mListener.getPosition(position);
+        }
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private Map<Integer , View> mCacherView;
 
@@ -138,4 +157,9 @@ public class TopListItenAdapter extends RecyclerView.Adapter<TopListItenAdapter.
         }
 
     }
+
+    public interface PositionClickListener{
+        void getPosition(int position);
+    }
+
 }
