@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.ecloud.pulltozoomview.PullToZoomListViewEx;
 import com.example.administrator.liwushuo.R;
+import com.example.administrator.liwushuo.adapters.ToplistSkipAdapter;
 import com.example.administrator.liwushuo.constant.HttpConstant;
 import com.example.administrator.liwushuo.model.toplistmodel.TopSkipSingle;
 import com.example.administrator.liwushuo.ui.fragments.BaseFragment;
@@ -28,6 +29,7 @@ public class TopListSkipFragmentOne extends BaseFragment {
     private LayoutInflater mInflater;
     private View mZoomView;
     private String mId;
+    private ToplistSkipAdapter mToplistSkipAdapter;
 
     @Nullable
     @Override
@@ -49,7 +51,7 @@ public class TopListSkipFragmentOne extends BaseFragment {
         mPullZoom.setZoomView(mZoomView);
         mPullZoom.setZoomEnabled(true);
         //创建适配器
-
+        mToplistSkipAdapter = new ToplistSkipAdapter(null,getActivity());
     }
     private void setupView() {
         RequestParams requestParams = new RequestParams(HttpConstant.TOPLIST_SKIP_SINGLE+mId+"/recommend?num=20&post_num=5");
@@ -59,22 +61,19 @@ public class TopListSkipFragmentOne extends BaseFragment {
                 Gson gson = new Gson();
                 TopSkipSingle topSkipSingle = gson.fromJson(result, TopSkipSingle.class);
                 List<TopSkipSingle.DataBean.RecommendItemsBean> data = topSkipSingle.getData().getRecommend_items();
-
+                mToplistSkipAdapter.upData(data);
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
             }
 
             @Override
             public void onCancelled(CancelledException cex) {
-
             }
 
             @Override
             public void onFinished() {
-
             }
         });
     }
