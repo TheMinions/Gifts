@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.ecloud.pulltozoomview.PullToZoomListViewEx;
 import com.example.administrator.liwushuo.R;
@@ -21,7 +22,7 @@ import org.xutils.x;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/9/23 0023.
+ *
  */
 public class TopListSkipFragmentOne extends BaseFragment {
 
@@ -30,6 +31,7 @@ public class TopListSkipFragmentOne extends BaseFragment {
     private View mZoomView;
     private String mId;
     private ToplistSkipAdapter mToplistSkipAdapter;
+    private ImageView mHeadImg;
 
     @Nullable
     @Override
@@ -45,7 +47,8 @@ public class TopListSkipFragmentOne extends BaseFragment {
     }
 
     private void initView() {
-
+        mHeadImg = ((ImageView) mZoomView.findViewById(R.id.toplist_skip_zoom_img));
+        mHeadImg.setImageResource(R.mipmap.image_default);
         mPullZoom = ((PullToZoomListViewEx) layout.findViewById(R.id.fragment_list_skip_pullzoom));
         mPullZoom.setHideHeader(true);
         mPullZoom.setZoomView(mZoomView);
